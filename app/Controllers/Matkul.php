@@ -94,12 +94,12 @@ class Matkul extends BaseController
 
         $matkul = new MatkulModel();
         try {
-            $matkul->update([
+            $newMatkul = $matkul->update([
                 'name' => $name,
                 'grade' => $grade,
                 'user_id' => $user_id
             ]);
-            return $this->respond(status: 200, message: 'Matkul updated');
+            return $this->respond(data: $newMatkul,status: 200, message: 'Matkul updated');
         } catch (\Exception $e) {
             return $this->respond(status: 500, message: $e->getMessage());
         }
@@ -166,12 +166,12 @@ class Matkul extends BaseController
         }
 
         try {
-            $matkulModel->insert([
+            $newMatkul = $matkulModel->insert([
                 'name' => $name,
                 'grade' => $grade,
                 'user_id' => $id
             ]);
-            return $this->respond([],status: 200, message: 'Matkul created');
+            return $this->respond($matkulModel->find($newMatkul),status: 200, message: 'Matkul created');
         } catch (\Exception $e) {
             return $this->respond(status: 500, message: $e->getMessage());
         }
@@ -225,7 +225,7 @@ class Matkul extends BaseController
                 'name' => $name,
                 'grade' => $grade,
             ]);
-            return $this->respond(status: 200, message: 'Matkul updated');
+            return $this->respond(data: $matkulModel->find($id_matkul),status: 200, message: 'Matkul updated');
         } catch (\Exception $e) {
             return $this->respond(status: 400, message: $e->getMessage());
         }
